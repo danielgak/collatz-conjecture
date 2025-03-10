@@ -36,12 +36,15 @@ But that's a problem for another day... after few minutes of execution we surpas
 
 ## V2 - the another day
 
-I've got 8 cpus, 7 of them watching how 1 struggles to get to 13b. [Rust atomic and locls](https://www.youtube.com/watch?v=99Qzpv325yI)
+I've got 8 cpus, 7 of them watching how 1 struggles to get to 13b. [Rust atomic and locals](https://www.youtube.com/watch?v=99Qzpv325yI)
 
-Lets add criterion to the mix
+One thing that I notice is that V1 is noticeably slower than the simple V0, as BigUint no longer represent the number in a single register it seems to access memory more often.
+To compare, I added criterion to be more precise about it:
 
 ```sh
-cargo bench
+cargo bench -- --release
 
-open target/criterion/report/index.html
+open target/criterion/report/index.html 
 ```
+
+And it shows that one step of V1 its ~50ns vs ~1.5ns for V0. That's something to worry. To understand where the time is spent, I'll use flamegraph.

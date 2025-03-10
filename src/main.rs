@@ -1,17 +1,11 @@
-mod version_0;
 mod version_1;
-
-use ctrlc;
 use std::io::{Read, Write};
 
 fn main() {
     version_1::run();
 }
 
-
-
-// eg. echo "1200152" | cargo run
-
+#[warn(dead_code)]
 fn debug_steps() {
     let stdout = std::io::stdout();
     let mut cout = std::io::BufWriter::new(stdout.lock());

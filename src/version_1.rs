@@ -31,7 +31,7 @@ pub fn run() {
     }
 }
 
-pub fn run_steps_until_reaching_base(proven_base: &BigUint) {
+pub fn run_steps_until_reaching_base(proven_base: &BigUint) -> BigUint {
     let mut x = proven_base.clone();
     loop {
         let rem = x.clone().rem(&*TWO);
@@ -47,4 +47,6 @@ pub fn run_steps_until_reaching_base(proven_base: &BigUint) {
         x.mul_assign(&*THREE);
         x.add_assign(&*ONE);
     }
+
+    x
 }

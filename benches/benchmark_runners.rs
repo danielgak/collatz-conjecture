@@ -3,7 +3,7 @@ use num_bigint::BigUint;
 use runners;
 
 pub fn benchmark_versions(c: &mut Criterion) {
-    const INTEGER: u64 = 12_327_829_502u64;
+    const INTEGER: u64 = 11701806950u64;
     let big_uint = BigUint::from(INTEGER);
 
     let mut group = c.benchmark_group("Runners");

@@ -47,4 +47,4 @@ cargo bench -- --release
 open target/criterion/report/index.html 
 ```
 
-And it shows that one step of V1 its ~50ns vs ~1.5ns for V0. That's something to worry. To understand where the time is spent, I'll use flamegraph.
+And it shows that one step of V1 its ~70ns vs ~2ns for V0. That's something to worry. To understand where the time is spent, I'll use flamegraph.

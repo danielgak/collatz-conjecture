@@ -406,7 +406,9 @@ dependencies = [
  "ctrlc",
  "flamegraph",
  "lazy_static",
+ "log",
  "num-bigint",
+ "num-traits",
  "once_cell",
 ]
 

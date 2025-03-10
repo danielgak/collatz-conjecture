@@ -8,6 +8,8 @@ ctrlc = "3.4.5"
 num-bigint = "0.4.6"
 once_cell = "1.20.3"
 lazy_static = "1.5.0"
+log = "0.4.26"
+num-traits = "0.2.19"
 
 [dev-dependencies]
 criterion = "0.5.1"

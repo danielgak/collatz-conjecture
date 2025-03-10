@@ -37,3 +37,11 @@ But that's a problem for another day... after few minutes of execution we surpas
 ## V2 - the another day
 
 I've got 8 cpus, 7 of them watching how 1 struggles to get to 13b. [Rust atomic and locls](https://www.youtube.com/watch?v=99Qzpv325yI)
+
+Lets add criterion to the mix
+
+```sh
+cargo bench
+
+open target/criterion/report/index.html
+```

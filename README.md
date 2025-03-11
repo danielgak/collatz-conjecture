@@ -48,3 +48,9 @@ open target/criterion/report/index.html
 ```
 
 And it shows that one step of V1 its ~70ns vs ~2ns for V0. That's something to worry. To understand where the time is spent, I'll use flamegraph.
+
+```sh
+CARGO_PROFILE_RELEASE_DEBUG=true sudo -E cargo flamegraph --root -o benches/flamegraph_v1.svg
+
+open benches/flamegraph.svg 
+```

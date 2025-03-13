@@ -15,6 +15,10 @@ pub fn benchmark_versions(c: &mut Criterion) {
     group.bench_function("version 1", |b| {
         b.iter(|| runners::version_1::run_steps_until_reaching_base(black_box(&big_uint)))
     });
+
+    group.bench_function("version 2", |b| {
+        b.iter(|| runners::version_2::run_steps_until_reaching_base(black_box(&big_uint)))
+    });
 }
 
 criterion_group!(benches, benchmark_versions);

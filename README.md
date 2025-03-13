@@ -1,8 +1,8 @@
 ## Collatz conjecture
 
-Let's see where I can get trying to brute force the search of a counterexample of the conjecture. There exist alogorithms capable of hitting really big numbers like [2^100000-1](https://ieeexplore.ieee.org/document/8560077), but copying it's not my goal. 
+Let's see where I can get trying to brute force the search of a counterexample of the conjecture. There exist algorithms capable of hitting big numbers like [2^100000-1](https://ieeexplore.ieee.org/document/8560077), but copying it's not my goal. 
 
-My goal it's to go through the rationale, and iteratively play and improve with rust, to gain performance while having fun.
+My goal it's to go through the rationale, and iteratively play and improve with rust while enjoying the process.
 
 ## V0 - base
 
@@ -19,7 +19,7 @@ increment base_loop by 1 and repeat
 ```
 This basically assumes that starting the loop (4, 2, 1) every number that already was checked, will get into the same result as the operations are deterministic.
 
-So without any other optimization it's easy to check that every single number follows the conjecture up to `10_000_000_000`. But as I started with u64 with precision `(2^64-1) 18,446,744,073,709,551,615` I would have been very happy proving up to this number. But ofcourse, I forgot that x grows much more than the base_loop value.
+So without any other optimization it's easy to check that every single number follows the conjecture up to `10_000_000_000`. But as I started with u64 with precision `(2^64-1) 18,446,744,073,709,551,615` I would have been very happy proving up to this number. But course, I forgot that x grows much more than the base_loop value.
 That's why when checking `12_327_829_503` the x overflows at some point and the code panics.
 
 ## V1 - big int
@@ -47,10 +47,23 @@ cargo bench -- --release
 open target/criterion/report/index.html 
 ```
 
-And it shows that one step of V1 its ~70ns vs ~2ns for V0. That's something to worry. To understand where the time is spent, I'll use flamegraph.
+And it shows that one step of V1 its ~70ns vs ~2ns for V0. That's something to worry.
+Before spending any time in parallelization, I would like to understand where the time is spent, I'll use flamegraph to represent the execution:
 
 ```sh
 CARGO_PROFILE_RELEASE_DEBUG=true sudo -E cargo flamegraph --root -o benches/flamegraph_v1.svg
 
 open benches/flamegraph.svg 
 ```
+
+As I'm not too familiar with bigInts and their operators, I used them in v1 everywhere and that's not too great. Only two improvements:
+- The parity check was improved to just checking the less significant 0 instead of calculating the modulus
+- The rest of the operators use u8
+
+That improved the execution down ~40% for every single check
+
+## V3 - increasing memory to reduce computation
+
+Let's apply some basics of dynamic programming for memorize the next 5 million elements. As we haven't reached the max representation of u64 for the base_number, the idea is that if a _"check was performed"_ over some base,
+it means that the operations will be the same at that number.
+

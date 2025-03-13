@@ -1,5 +1,5 @@
-mod version_1;
+use runners::version_2;
 
 fn main() {
-    version_1::run();
+    version_2::run();
 }

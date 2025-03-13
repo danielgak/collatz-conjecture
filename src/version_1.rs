@@ -2,6 +2,8 @@ use lazy_static::lazy_static;
 use num_bigint::{BigUint, ToBigUint};
 use std::ops::{AddAssign, DivAssign, MulAssign, Rem};
 use std::sync::{Arc, Mutex};
+use crate::version_0::CtrCPrint::{PrintMutex};
+use crate::version_0::set_ctrc_handler;
 
 lazy_static! {
     static ref ONE: BigUint = 1.to_biguint().unwrap();
@@ -15,15 +17,7 @@ lazy_static! {
 pub fn run() {
     let proven_base = Arc::new(Mutex::new(BigUint::from(12758089137u64)));
     let proven_base_clone = Arc::clone(&proven_base);
-
-    ctrlc::set_handler(move || {
-        println!(
-            "\nStopped at: {}",
-            proven_base_clone.lock().unwrap().clone()
-        );
-        std::process::exit(0);
-    })
-    .expect("Error setting Ctrl-C handler");
+    set_ctrc_handler(PrintMutex(proven_base_clone));
 
     loop {
         run_steps_until_reaching_base(&proven_base.lock().unwrap());
